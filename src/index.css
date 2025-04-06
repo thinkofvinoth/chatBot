@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Modern Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gray.400/50') theme('colors.gray.100/50');
+  }
+
+  .dark * {
+    scrollbar-color: theme('colors.gray.600/50') theme('colors.gray.800/50');
+  }
+
+  /* Webkit browsers (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar:horizontal {
+    @apply h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100/50 dark:bg-gray-800/50 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-400/50 dark:bg-gray-600/50 
+           rounded-full 
+           border-4 border-solid border-transparent
+           bg-clip-padding
+           backdrop-filter backdrop-blur-sm;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500/60 dark:bg-gray-500/60;
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    @apply bg-gray-600/70 dark:bg-gray-400/70;
+  }
+
+  /* Corner where vertical and horizontal scrollbars meet */
+  ::-webkit-scrollbar-corner {
+    @apply bg-transparent;
+  }
+
+  /* Ensure smooth scrolling on iOS/Safari */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Custom scrollbar styles for specific components */
+  .chat-container {
+    @apply overflow-y-auto;
+    scrollbar-gutter: stable;
+  }
+
+  /* Hide scrollbar for mobile devices while maintaining functionality */
+  @media (max-width: 640px) {
+    ::-webkit-scrollbar {
+      @apply w-1;
+    }
+
+    ::-webkit-scrollbar:horizontal {
+      @apply h-1;
+    }
+  }
+}
+
+/* Animations from existing file */
+@keyframes gradient {
+  0%, 100% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) }
+  100% { transform: translateX(100%) }
+}
