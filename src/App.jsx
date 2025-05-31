@@ -86,7 +86,7 @@ function App() {
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8">
             <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-dark-accent via-dark-accent2 to-dark-accent animate-gradient">
-              CSW Chat Bot
+              CSW Genie
             </h1>
             <p className={`mt-2 text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               Experience our chat interface in two different formats
