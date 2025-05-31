@@ -5,13 +5,13 @@ import { ChatInput } from './ChatInput';
 
 export const ChatContainer = ({ messages, onSendMessage }) => {
   return (
-    <div className="flex h-[calc(100vh-12rem)] max-h-[600px] flex-col sm:h-[600px] w-full">
-      <div className="chat-container flex-1 overflow-hidden bg-transparent px-4 sm:px-6">
+    <div className="chat-container">
+      <div className="chat-messages">
         <Virtuoso
           style={{ height: '100%' }}
           data={messages}
           itemContent={(_, message) => (
-            <div className="py-4">
+            <div className="message-wrapper">
               <ChatMessage
                 message={message}
                 isBot={message.sender.id === 'bot'}
