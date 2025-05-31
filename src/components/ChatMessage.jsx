@@ -80,7 +80,7 @@ export const ChatMessage = ({ message, isBot }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
       className={cn(
-        'group flex items-end gap-2',
+        'group flex items-end gap-2 w-full',
         isBot ? 'justify-start' : 'flex-row-reverse'
       )}
     >
@@ -123,23 +123,23 @@ export const ChatMessage = ({ message, isBot }) => {
             </motion.button>
 
             {showShareMenu && (
-              <div className="absolute bottom-0 left-8 z-10 w-48 rounded-lg bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black/5 dark:ring-white/5">
+              <div className="absolute bottom-0 left-8 z-10 w-48 rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg ring-1 ring-black/5 dark:ring-white/5">
                 <div className="p-1">
                   <button
                     onClick={() => handleShare('copy')}
-                    className="w-full rounded-md px-2 py-1 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                    className="w-full rounded-md px-2 py-1 text-left text-sm hover:bg-white/50 dark:hover:bg-gray-700/50"
                   >
                     Copy to clipboard
                   </button>
                   <button
                     onClick={() => handleShare('twitter')}
-                    className="w-full rounded-md px-2 py-1 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                    className="w-full rounded-md px-2 py-1 text-left text-sm hover:bg-white/50 dark:hover:bg-gray-700/50"
                   >
                     Share on Twitter
                   </button>
                   <button
                     onClick={() => handleShare('linkedin')}
-                    className="w-full rounded-md px-2 py-1 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                    className="w-full rounded-md px-2 py-1 text-left text-sm hover:bg-white/50 dark:hover:bg-gray-700/50"
                   >
                     Share on LinkedIn
                   </button>
@@ -150,12 +150,12 @@ export const ChatMessage = ({ message, isBot }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 flex-1">
         <div
           className={cn(
-            'max-w-[280px] sm:max-w-[440px] rounded-2xl px-4 py-2.5 text-[15px] leading-relaxed',
+            'w-full rounded-2xl px-4 py-2.5 text-[15px] leading-relaxed',
             isBot
-              ? 'rounded-bl-sm bg-white/10 dark:bg-gray-800/50 backdrop-blur-md border border-white/10 dark:border-white/5 text-gray-700 dark:text-gray-200'
+              ? 'rounded-bl-sm bg-white/10 dark:bg-gray-800/30 backdrop-blur-md border border-white/10 dark:border-white/5 text-gray-700 dark:text-gray-200'
               : 'rounded-br-sm bg-gradient-to-br from-indigo-500 to-purple-500 text-white'
           )}
         >
