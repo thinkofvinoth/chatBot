@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, ThumbsUp, Clock, User } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Bot, ThumbsUp, ThumbsDown, Share2, User, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '../utils/cn';
 
@@ -34,7 +34,6 @@ const Avatar = ({ sender, size = 'default' }) => {
     );
   }
 
-  // Generate initials from name
   const initials = sender.name
     .split(' ')
     .map(word => word[0])
@@ -52,12 +51,27 @@ const Avatar = ({ sender, size = 'default' }) => {
   );
 };
 
-export const ChatMessage = ({ message, isBot, onReaction, actions = [] }) => {
-  const [isLiked, setIsLiked] = useState(false);
+export const ChatMessage = ({ message, isBot }) => {
+  const [reaction, setReaction] = useState(null);
+  const [showShareMenu, setShowShareMenu] = useState(false);
 
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-    onReaction?.();
+  const handleReaction = (type) => {
+    setReaction(type);
+  };
+
+  const handleShare = async (method) => {
+    switch (method) {
+      case 'copy':
+        await navigator.clipboard.writeText(message.content);
+        break;
+      case 'twitter':
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(message.content)}`);
+        break;
+      case 'linkedin':
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}&summary=${encodeURIComponent(message.content)}`);
+        break;
+    }
+    setShowShareMenu(false);
   };
 
   return (
@@ -73,25 +87,75 @@ export const ChatMessage = ({ message, isBot, onReaction, actions = [] }) => {
       <div className="flex flex-col items-center gap-2">
         <Avatar sender={message.sender} />
         
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={handleLike}
-          className={cn(
-            'rounded-full p-1.5 transition-colors',
-            isLiked ? 'text-indigo-500 dark:text-indigo-400' : 'text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300'
-          )}
-        >
-          <ThumbsUp className="h-4 w-4" />
-        </motion.button>
+        <div className="flex flex-col gap-1">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => handleReaction('up')}
+            className={cn(
+              'rounded-full p-1.5 transition-colors',
+              reaction === 'up' ? 'text-indigo-500 dark:text-indigo-400' : 'text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300'
+            )}
+          >
+            <ThumbsUp className="h-4 w-4" />
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => handleReaction('down')}
+            className={cn(
+              'rounded-full p-1.5 transition-colors',
+              reaction === 'down' ? 'text-red-500 dark:text-red-400' : 'text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300'
+            )}
+          >
+            <ThumbsDown className="h-4 w-4" />
+          </motion.button>
+
+          <div className="relative">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setShowShareMenu(!showShareMenu)}
+              className="rounded-full p-1.5 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+            >
+              <Share2 className="h-4 w-4" />
+            </motion.button>
+
+            {showShareMenu && (
+              <div className="absolute bottom-0 left-8 z-10 w-48 rounded-lg bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black/5 dark:ring-white/5">
+                <div className="p-1">
+                  <button
+                    onClick={() => handleShare('copy')}
+                    className="w-full rounded-md px-2 py-1 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    Copy to clipboard
+                  </button>
+                  <button
+                    onClick={() => handleShare('twitter')}
+                    className="w-full rounded-md px-2 py-1 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    Share on Twitter
+                  </button>
+                  <button
+                    onClick={() => handleShare('linkedin')}
+                    className="w-full rounded-md px-2 py-1 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    Share on LinkedIn
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       <div className="flex flex-col gap-1">
         <div
           className={cn(
-            'max-w-[280px] sm:max-w-[440px] rounded-2xl px-4 py-2.5 text-[15px] leading-relaxed shadow-sm',
+            'max-w-[280px] sm:max-w-[440px] rounded-2xl px-4 py-2.5 text-[15px] leading-relaxed',
             isBot
-              ? 'rounded-bl-sm bg-white dark:bg-gray-800 ring-1 ring-black/5 dark:ring-white/5 text-gray-700 dark:text-gray-200'
+              ? 'rounded-bl-sm bg-white/10 dark:bg-gray-800/50 backdrop-blur-md border border-white/10 dark:border-white/5 text-gray-700 dark:text-gray-200'
               : 'rounded-br-sm bg-gradient-to-br from-indigo-500 to-purple-500 text-white'
           )}
         >
@@ -104,22 +168,6 @@ export const ChatMessage = ({ message, isBot, onReaction, actions = [] }) => {
             {format(message.timestamp, 'h:mm a')}
           </span>
         </div>
-
-        {actions.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-2">
-            {actions.map((action, index) => (
-              <motion.button
-                key={index}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={action.onClick}
-                className="rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-1.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              >
-                {action.label}
-              </motion.button>
-            ))}
-          </div>
-        )}
       </div>
     </motion.div>
   );

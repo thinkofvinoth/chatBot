@@ -75,34 +75,24 @@ function App() {
 
   return (
     <div className={`relative min-h-screen ${isDarkMode ? 'dark' : ''}`}>
-      {/* Background layers */}
       <div className="fixed inset-0 z-0">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 dark:from-dark-bg dark:via-dark-secondary dark:to-dark-surface transition-colors duration-500"></div>
-        
-        {/* Animated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent dark:via-dark-accent/5 animate-shimmer"></div>
-        
-        {/* Dot pattern overlay */}
-        <div className="absolute inset-0 bg-dot-pattern bg-[length:20px_20px] opacity-[0.15] dark:opacity-[0.07]"></div>
-        
-        {/* Noise texture overlay */}
-        <div className="absolute inset-0 bg-noise-pattern opacity-[0.015] mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,...')] opacity-[0.15] mix-blend-soft-light"></div>
+        <div className="absolute inset-0 backdrop-blur-[100px]"></div>
       </div>
 
-      {/* Content */}
       <div className="relative z-10">
-        <div className="container mx-auto max-w-6xl px-4 py-8">
+        <div className="container mx-auto px-4 py-8">
           <div className="mb-8">
             <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-dark-accent via-dark-accent2 to-dark-accent animate-gradient">
-             CSW Chat Bot
+              CSW Chat Bot
             </h1>
-            <p className="mt-2 text-lg text-gray-600 dark:text-dark-text">
+            <p className="mt-2 text-lg text-gray-300">
               Experience our chat interface in two different formats
             </p>
           </div>
 
-          <div className="rounded-2xl bg-white/80 dark:bg-dark-surface/90 backdrop-blur-sm ring-1 ring-black/5 dark:ring-dark-border shadow-2xl overflow-hidden">
+          <div className="rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 shadow-2xl overflow-hidden">
             <Header
               title="Main Chat Interface"
               subtitle="Full-featured chat experience"
