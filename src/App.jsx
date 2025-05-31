@@ -76,9 +76,10 @@ function App() {
   return (
     <div className={`relative min-h-screen ${isDarkMode ? 'dark' : ''}`}>
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,...')] opacity-[0.15] mix-blend-soft-light"></div>
-        <div className="absolute inset-0 backdrop-blur-[100px]"></div>
+        <div className={`absolute inset-0 bg-gradient-to-br ${isDarkMode ? 'from-gray-900 via-gray-800 to-gray-900' : 'from-blue-50 via-indigo-50 to-purple-50'}`} />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.1)_0%,_transparent_100%)] opacity-75" />
+        <div className="absolute inset-0 backdrop-blur-[100px]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-black/5 to-transparent" />
       </div>
 
       <div className="relative z-10">
@@ -87,12 +88,12 @@ function App() {
             <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-dark-accent via-dark-accent2 to-dark-accent animate-gradient">
               CSW Chat Bot
             </h1>
-            <p className="mt-2 text-lg text-gray-300">
+            <p className={`mt-2 text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               Experience our chat interface in two different formats
             </p>
           </div>
 
-          <div className="rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 shadow-2xl overflow-hidden">
+          <div className={`rounded-2xl backdrop-blur-lg border ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-white/60 border-white/20'} shadow-2xl overflow-hidden`}>
             <Header
               title="Main Chat Interface"
               subtitle="Full-featured chat experience"

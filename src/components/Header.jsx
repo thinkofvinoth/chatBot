@@ -18,7 +18,7 @@ export const Header = ({
     <motion.div 
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="sticky top-0 z-10 border-b border-gray-100/80 dark:border-gray-800 bg-gradient-to-r from-indigo-500/5 via-purple-500/5 to-pink-500/5 backdrop-blur-xl px-6 py-4"
+      className={`sticky top-0 z-10 border-b ${isDarkMode ? 'border-white/10' : 'border-black/5'} backdrop-blur-xl px-6 py-4`}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
@@ -29,14 +29,14 @@ export const Header = ({
             <h1 className={`text-xl font-semibold bg-gradient-to-r ${theme.primaryColor} bg-clip-text text-transparent`}>
               {title}
             </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">{subtitle}</p>
+            <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{subtitle}</p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           <button
             onClick={toggleTheme}
-            className="rounded-full p-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+            className={`rounded-full p-2 ${isDarkMode ? 'text-gray-400 hover:bg-gray-800' : 'text-gray-500 hover:bg-gray-100'}`}
           >
             <motion.div
               initial={false}
@@ -50,7 +50,7 @@ export const Header = ({
           {onClose && (
             <button
               onClick={onClose}
-              className="rounded-full p-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+              className={`rounded-full p-2 ${isDarkMode ? 'text-gray-400 hover:bg-gray-800' : 'text-gray-500 hover:bg-gray-100'}`}
             >
               <X className="h-5 w-5" />
             </button>
