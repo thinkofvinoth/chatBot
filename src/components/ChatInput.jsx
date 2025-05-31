@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Send, Smile, Paperclip, Mic, MessageSquare, HelpCircle, FileText, Settings } from 'lucide-react';
+import { Send, Smile, Paperclip, Mic } from 'lucide-react';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 
@@ -27,44 +27,10 @@ export const ChatInput = ({ onSendMessage }) => {
     setShowEmojiPicker(false);
   };
 
-  const handleQuickAction = (content) => {
-    onSendMessage(content);
-  };
-
   return (
     <div className="relative border-t border-gray-100/80 dark:border-gray-800/50">
       <div className="absolute inset-0 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm" />
-      <div className="relative px-4 py-2">
-        <div className="mb-3 flex gap-2 overflow-x-auto pb-2">
-          <button
-            onClick={() => handleQuickAction("Can you help me with a question?")}
-            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-dark-accent to-dark-accent2 px-4 py-2 text-sm text-white shadow-sm hover:opacity-90"
-          >
-            <MessageSquare className="h-4 w-4" />
-            <span>Ask Question</span>
-          </button>
-          <button
-            onClick={() => handleQuickAction("I need help with something.")}
-            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-dark-accent to-dark-accent2 px-4 py-2 text-sm text-white shadow-sm hover:opacity-90"
-          >
-            <HelpCircle className="h-4 w-4" />
-            <span>Get Help</span>
-          </button>
-          <button
-            onClick={() => handleQuickAction("Can you show me some documentation?")}
-            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-dark-accent to-dark-accent2 px-4 py-2 text-sm text-white shadow-sm hover:opacity-90"
-          >
-            <FileText className="h-4 w-4" />
-            <span>Documentation</span>
-          </button>
-          <button
-            onClick={() => handleQuickAction("I'd like to change some settings.")}
-            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-dark-accent to-dark-accent2 px-4 py-2 text-sm text-white shadow-sm hover:opacity-90"
-          >
-            <Settings className="h-4 w-4" />
-            <span>Settings</span>
-          </button>
-        </div>
+      <div className="relative px-4 py-4 sm:px-6">
         <div className="relative flex items-center gap-2">
           <button
             ref={emojiButtonRef}
