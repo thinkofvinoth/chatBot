@@ -170,51 +170,25 @@ body {
 
 /* Chat Components */
 .chat-container {
-  display: flex;
-  flex-direction: column;
   height: calc(100vh - 12rem);
   max-height: 600px;
   width: 100%;
-  position: relative;
-  background: transparent;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
 }
 
-.chat-messages {
-  flex: 1;
-  overflow: hidden;
-  padding: 1rem;
-}
-
-.message-wrapper {
-  padding: 1rem 0;
-  animation: fadeIn 0.3s ease-out;
-}
-
-/* Message Styles */
-.message {
+.chat-message {
   display: flex;
   gap: 1rem;
-  max-width: 100%;
+  margin-bottom: 1rem;
 }
 
 .message-content {
-  flex: 1;
   max-width: 80%;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-
-.message-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.message-body {
-  padding: 1rem;
-  line-height: 1.5;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
 }
 
 /* Animations */
