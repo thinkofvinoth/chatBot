@@ -8,6 +8,11 @@
     --animation-timing: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Theme transition */
+  * {
+    @apply transition-colors duration-300;
+  }
+
   /* Scrollbar Styles */
   * {
     scrollbar-width: thin;
@@ -56,7 +61,8 @@
     @apply bg-white/80 dark:bg-gray-900/80 
            backdrop-blur-lg 
            border border-white/20 dark:border-white/10
-           shadow-xl;
+           shadow-xl
+           transition-all duration-300;
   }
 
   .glass-input {
@@ -64,7 +70,8 @@
            backdrop-blur-sm
            border border-white/20 dark:border-white/10
            focus:border-dark-accent/50 dark:focus:border-dark-accent/50
-           focus:ring-2 focus:ring-dark-accent/20 dark:focus:ring-dark-accent/20;
+           focus:ring-2 focus:ring-dark-accent/20 dark:focus:ring-dark-accent/20
+           transition-all duration-300;
   }
 
   .gradient-button {
