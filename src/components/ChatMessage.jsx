@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Bot, ThumbsUp, ThumbsDown, Share2, User, Clock } from 'lucide-react';
+import { Bot, ThumbsUp, ThumbsDown, Share2, User, Clock, MoreHorizontal } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '../utils/cn';
 
@@ -10,43 +10,19 @@ const Avatar = ({ sender, size = 'default' }) => {
     small: 'h-8 w-8',
   };
 
-  if (sender.id === 'bot') {
-    return (
-      <div className={cn(
-        "flex items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-500",
-        sizeClasses[size]
-      )}>
-        <Bot className="h-6 w-6 text-white" />
-      </div>
-    );
-  }
-
-  if (sender.avatar) {
-    return (
-      <img
-        src={sender.avatar}
-        alt={sender.name}
-        className={cn(
-          "rounded-full object-cover",
-          sizeClasses[size]
-        )}
-      />
-    );
-  }
-
-  const initials = sender.name
-    .split(' ')
-    .map(word => word[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2);
-
   return (
     <div className={cn(
-      "flex items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-rose-500 text-white font-medium",
+      "flex items-center justify-center rounded-full",
+      sender.id === 'bot' 
+        ? "bg-gradient-to-br from-indigo-500 to-purple-500" 
+        : "bg-gradient-to-br from-pink-500 to-rose-500",
       sizeClasses[size]
     )}>
-      {initials || <User className="h-6 w-6" />}
+      {sender.id === 'bot' ? (
+        <Bot className="h-6 w-6 text-white" />
+      ) : (
+        <User className="h-6 w-6 text-white" />
+      )}
     </div>
   );
 };
@@ -89,13 +65,23 @@ export const ChatMessage = ({ message, isBot }) => {
       <div className="flex flex-col gap-2 max-w-[80%]">
         <div
           className={cn(
-            'rounded-2xl px-4 py-2.5 text-[15px] leading-relaxed',
+            'rounded-2xl px-4 py-2.5',
             isBot
-              ? 'rounded-bl-sm bg-white/10 dark:bg-gray-800/50 backdrop-blur-md border border-white/10 dark:border-white/5 text-gray-700 dark:text-gray-200'
-              : 'rounded-br-sm bg-gradient-to-br from-indigo-500 to-purple-500 text-white'
+              ? 'rounded-bl-sm bg-white/10 dark:bg-gray-800/50 backdrop-blur-md border border-white/10 dark:border-white/5'
+              : 'rounded-br-sm bg-gradient-to-br from-indigo-500 to-purple-500'
           )}
         >
-          {message.content}
+          <div className="flex items-center justify-between mb-2">
+            <span className={`text-sm font-medium ${isBot ? 'text-gray-700 dark:text-gray-200' : 'text-white'}`}>
+              {message.sender.name}
+            </span>
+            <button className={`p-1 rounded-full ${isBot ? 'text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' : 'text-white/70 hover:text-white hover:bg-white/10'}`}>
+              <MoreHorizontal className="h-4 w-4" />
+            </button>
+          </div>
+          <div className={`text-[15px] leading-relaxed ${isBot ? 'text-gray-700 dark:text-gray-200' : 'text-white'}`}>
+            {message.content}
+          </div>
         </div>
 
         <div className="flex items-center justify-between px-1">
@@ -112,7 +98,7 @@ export const ChatMessage = ({ message, isBot }) => {
               whileTap={{ scale: 0.9 }}
               onClick={() => handleReaction('up')}
               className={cn(
-                'rounded-full p-1.5 transition-colors',
+                'rounded-full p-1.5',
                 reaction === 'up' ? 'text-indigo-500 dark:text-indigo-400' : 'text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300'
               )}
             >
@@ -124,7 +110,7 @@ export const ChatMessage = ({ message, isBot }) => {
               whileTap={{ scale: 0.9 }}
               onClick={() => handleReaction('down')}
               className={cn(
-                'rounded-full p-1.5 transition-colors',
+                'rounded-full p-1.5',
                 reaction === 'down' ? 'text-red-500 dark:text-red-400' : 'text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300'
               )}
             >
