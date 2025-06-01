@@ -10,6 +10,8 @@ export const ChatContainer = ({ messages, onSendMessage }) => {
     try {
       setIsLoading(true);
       await onSendMessage(message);
+          await new Promise(resolve => setTimeout(resolve, 2000)); // wait 2 seconds before sending
+
     } finally {
       setIsLoading(false);
     }
