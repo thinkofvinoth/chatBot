@@ -7,17 +7,24 @@ export const ChatContainer = ({ messages, onSendMessage }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSendMessage = async (message) => {
-    setIsLoading(true);
-    await onSendMessage(message);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      await onSendMessage(message);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  const allMessages = isLoading 
+    ? [...messages, { id: 'loading', isLoading: true, sender: { id: 'bot' } }]
+    : messages;
 
   return (
     <div className="flex h-[calc(100vh-12rem)] max-h-[600px] flex-col sm:h-[600px] w-full">
       <div className="chat-container flex-1 overflow-hidden bg-transparent px-4 sm:px-6">
         <Virtuoso
           style={{ height: '100%' }}
-          data={[...messages, ...(isLoading ? [{ id: 'loading', isLoading: true }] : [])]}
+          data={allMessages}
           itemContent={(_, item) => (
             <div className="py-4">
               <ChatMessage
@@ -31,7 +38,7 @@ export const ChatContainer = ({ messages, onSendMessage }) => {
           alignToBottom
         />
       </div>
-      <ChatInput onSendMessage={handleSendMessage} />
+      <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} />
     </div>
   );
 };

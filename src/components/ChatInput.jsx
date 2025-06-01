@@ -3,13 +3,13 @@ import { Send, Smile, Paperclip, Mic } from 'lucide-react';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 
-export const ChatInput = ({ onSendMessage }) => {
+export const ChatInput = ({ onSendMessage, disabled }) => {
   const [message, setMessage] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const emojiButtonRef = useRef(null);
 
   const handleSend = () => {
-    if (message.trim()) {
+    if (message.trim() && !disabled) {
       onSendMessage(message.trim());
       setMessage('');
     }
@@ -35,9 +35,10 @@ export const ChatInput = ({ onSendMessage }) => {
           <button
             ref={emojiButtonRef}
             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            disabled={disabled}
             className="rounded-full p-2 text-gray-500 hover:bg-white/50 hover:text-dark-accent 
               dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 
-              transition-colors"
+              transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Smile className="h-5 w-5" />
           </button>
@@ -52,9 +53,12 @@ export const ChatInput = ({ onSendMessage }) => {
               />
             </div>
           )}
-          <button className="rounded-full p-2 text-gray-500 hover:bg-white/50 hover:text-dark-accent 
-            dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 
-            transition-colors">
+          <button 
+            className="rounded-full p-2 text-gray-500 hover:bg-white/50 hover:text-dark-accent 
+              dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 
+              transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={disabled}
+          >
             <Paperclip className="h-5 w-5" />
           </button>
           <input
@@ -63,19 +67,24 @@ export const ChatInput = ({ onSendMessage }) => {
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Type your message..."
+            disabled={disabled}
             className="flex-1 rounded-xl border border-gray-200/80 bg-white/90 px-4 py-3 
               text-gray-700 placeholder-gray-400 shadow-sm
               dark:border-gray-700/50 dark:bg-gray-800/90 dark:text-gray-200 dark:placeholder-gray-500
-              focus:outline-none focus:ring-2 focus:ring-dark-accent/50"
+              focus:outline-none focus:ring-2 focus:ring-dark-accent/50
+              disabled:opacity-50 disabled:cursor-not-allowed"
           />
-          <button className="rounded-full p-2 text-gray-500 hover:bg-white/50 hover:text-dark-accent 
-            dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 
-            transition-colors">
+          <button 
+            className="rounded-full p-2 text-gray-500 hover:bg-white/50 hover:text-dark-accent 
+              dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 
+              transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={disabled}
+          >
             <Mic className="h-5 w-5" />
           </button>
           <button
             onClick={handleSend}
-            disabled={!message.trim()}
+            disabled={!message.trim() || disabled}
             className="flex h-11 w-11 items-center justify-center rounded-full 
               bg-gradient-to-r from-dark-accent to-dark-accent2 text-white 
               shadow-sm hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
