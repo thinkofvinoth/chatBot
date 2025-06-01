@@ -7,7 +7,6 @@ export const ChatContainer = ({ messages, onSendMessage }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSendMessage = async (message) => {
-    await new Promise(resolve => setTimeout(resolve, 2000)); // 2 second delay
     setIsLoading(true);
     await onSendMessage(message);
     setIsLoading(false);
