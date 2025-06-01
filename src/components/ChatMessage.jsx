@@ -4,6 +4,22 @@ import { Bot, ThumbsUp, ThumbsDown, Share2, User, Clock, MoreHorizontal } from '
 import { format } from 'date-fns';
 import { cn } from '../utils/cn';
 
+const MessageSkeleton = () => (
+  <div className="flex gap-4 animate-pulse">
+    <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700" />
+    <div className="flex-1 space-y-2">
+      <div className="h-4 w-24 rounded bg-gray-200 dark:bg-gray-700" />
+      <div className="space-y-2">
+        <div className="h-4 w-3/4 rounded bg-gray-200 dark:bg-gray-700" />
+        <div className="h-4 w-1/2 rounded bg-gray-200 dark:bg-gray-700" />
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="h-3 w-16 rounded bg-gray-200 dark:bg-gray-700" />
+      </div>
+    </div>
+  </div>
+);
+
 const Avatar = ({ sender, size = 'default' }) => {
   const sizeClasses = {
     default: 'h-10 w-10',
@@ -27,9 +43,13 @@ const Avatar = ({ sender, size = 'default' }) => {
   );
 };
 
-export const ChatMessage = ({ message, isBot }) => {
+export const ChatMessage = ({ message, isBot, isLoading }) => {
   const [reaction, setReaction] = useState(null);
   const [showShareMenu, setShowShareMenu] = useState(false);
+
+  if (isLoading) {
+    return <MessageSkeleton />;
+  }
 
   const handleReaction = (type) => {
     setReaction(type);
