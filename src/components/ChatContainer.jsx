@@ -6,21 +6,19 @@ import { ChatInput } from './ChatInput';
 export const ChatContainer = ({ messages, onSendMessage }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-const handleSendMessage = async (message) => {
-  try {
-    setIsLoading(true);
-    await onSendMessage(message);
-    await new Promise(resolve => setTimeout(resolve, 2000)); // wait 2 seconds before sending
+  const handleSendMessage = async (message) => {
+    try {
+      setIsLoading(true);
+      await onSendMessage(message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  } finally {
-    setIsLoading(false);
+  const allMessages = [...messages];
+  if (isLoading && messages.length > 0 && messages[messages.length - 1].sender.id !== 'bot') {
+    allMessages.push({ id: 'loading', isLoading: true, sender: { id: 'bot' } });
   }
-};
-
-
-  const allMessages = isLoading 
-    ? [...messages, { id: 'loading', isLoading: true, sender: { id: 'bot' } }]
-    : messages;
 
   return (
     <div className="flex h-[calc(100vh-12rem)] max-h-[600px] flex-col sm:h-[600px] w-full">
