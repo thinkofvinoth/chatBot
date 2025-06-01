@@ -23,6 +23,7 @@ export const EmbeddedChat = ({
 }) => {
   const [isOpen, setIsOpen] = useState(isEmbedded);
   const [messages, setMessages] = useState(initialMessages);
+  const [isLoading, setIsLoading] = useState(false);
   const { isDarkMode } = useThemeStore();
 
   const handleSendMessage = async (content) => {
@@ -43,6 +44,7 @@ export const EmbeddedChat = ({
     };
 
     setMessages((prev) => [...prev, newMessage]);
+    setIsLoading(true);
 
     if (onSendMessage) {
       try {
@@ -65,6 +67,8 @@ export const EmbeddedChat = ({
         setMessages((prev) => [...prev, botResponse]);
       } catch (error) {
         console.error('Error getting response:', error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -85,6 +89,7 @@ export const EmbeddedChat = ({
       <ChatContainer
         messages={messages}
         onSendMessage={handleSendMessage}
+        isLoading={isLoading}
       />
     </div>
   );
