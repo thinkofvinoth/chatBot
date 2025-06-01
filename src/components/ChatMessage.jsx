@@ -6,19 +6,36 @@ import { cn } from '../utils/cn';
 import { Spinner } from './Spinner';
 
 const MessageSkeleton = () => (
-  <div className="flex gap-4 animate-pulse">
-    <div className="h-10 w-10 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
-      <Spinner size="small" className="border-gray-400 dark:border-gray-500" />
+  <div className="flex gap-4">
+    <div className="relative h-10 w-10 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center">
+        <Spinner size="small" className="border-dark-accent/50" />
+      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0.5, 1, 0.5] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+        className="h-6 w-6 text-gray-400 dark:text-gray-500"
+      >
+        <Bot className="h-6 w-6" />
+      </motion.div>
     </div>
     <div className="flex-1 space-y-3">
-      <div className="h-4 w-24 rounded bg-gray-200 dark:bg-gray-700" />
-      <div className="space-y-2">
-        <div className="h-4 w-3/4 rounded bg-gray-200 dark:bg-gray-700" />
-        <div className="h-4 w-1/2 rounded bg-gray-200 dark:bg-gray-700" />
-      </div>
-      <div className="flex items-center gap-2">
-        <div className="h-3 w-16 rounded bg-gray-200 dark:bg-gray-700" />
-      </div>
+      <motion.div
+        initial={{ opacity: 0.5 }}
+        animate={{ opacity: [0.5, 0.8, 0.5] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+        className="space-y-3"
+      >
+        <div className="h-4 w-24 rounded bg-gray-200 dark:bg-gray-700" />
+        <div className="space-y-2">
+          <div className="h-4 w-3/4 rounded bg-gray-200 dark:bg-gray-700" />
+          <div className="h-4 w-1/2 rounded bg-gray-200 dark:bg-gray-700" />
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="h-3 w-16 rounded bg-gray-200 dark:bg-gray-700" />
+        </div>
+      </motion.div>
     </div>
   </div>
 );
