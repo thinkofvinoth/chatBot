@@ -6,14 +6,16 @@ import { ChatInput } from './ChatInput';
 export const ChatContainer = ({ messages, onSendMessage }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSendMessage = async (message) => {
-    try {
-      setIsLoading(true);
-      await onSendMessage(message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+const handleSendMessage = async (message) => {
+  try {
+    setIsLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 2000)); // wait 2 seconds before sending
+    await onSendMessage(message);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const allMessages = isLoading 
     ? [...messages, { id: 'loading', isLoading: true, sender: { id: 'bot' } }]
